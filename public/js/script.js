@@ -21,11 +21,8 @@ const map = L.map("map").setView([0, 0], 16); // Center of the earth with zoom o
 L.tileLayer("https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png", {
   attribution: "Harshit Raj", // adding name  to the map at the bottom right corner
 }).addTo(map);
-
-
-
+//saving the Marker id 
 const markers = {};
-
 // Now get data from the backend
 socket.on("receive-location", (data) => {
   const { id, latitude, longitude } = data;
@@ -39,11 +36,10 @@ socket.on("receive-location", (data) => {
   }
 });
 
-
- socket.on("user-disconnected", (id) =>  {
-    //checks if marker of user is still there
-    if ( markers[id] ){
-        map.removeLayer( markers[id] );
-        delete markers[id];
-    }
- })
+socket.on("user-disconnected", (id) => {
+  //checks if marker of user is still there
+  if (markers[id]) {
+    map.removeLayer(markers[id]);
+    delete markers[id];
+  }
+});
